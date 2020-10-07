@@ -309,7 +309,13 @@ export class Feature extends React.Component {
     _ref = React.createRef();
 
     validateName(name) {
-        const names = getAllNames('feature');
+        const names = store
+            .getState()
+            .undoable.present.items.filter(
+                (item) => item && item.class === 'feature' && item.index !== this.props.item.index,
+            )
+            .map((item) => item.name);
+        console.log(names);
         return !names.includes(name);
     }
 
@@ -327,6 +333,18 @@ export class Feature extends React.Component {
     componentDidMount() {
         // this.properties = Python.getFeatureProperties(this.props.type)
         const { item } = this.props;
+        const name = item.name;
+
+        let new_name = name;
+        let idx = 0;
+        while (!this.validateName(new_name)) {
+            idx = idx + 1;
+            new_name = name + idx;
+        }
+
+        if (new_name !== name) {
+            actions.setName(item.index, new_name);
+        }
 
         if (!item.items || item.items.length === 0) {
             Python.getFeatureProperties(item.type, (err, obj) => {
@@ -335,9 +353,11 @@ export class Feature extends React.Component {
                         const name = value[0];
                         const obj = value[1];
 
+                        console.log(new_name);
+
                         const propDict = {
                             class: 'property',
-                            name: name,
+                            name: new_name,
                             S: obj.default || '',
                         };
 
@@ -449,7 +469,6 @@ export class Feature extends React.Component {
                                 value: item.name,
                                 onBlur: (e) => {
                                     const { value } = e.target;
-
                                     if (this.validateName(value)) {
                                         this.setState({ nameError: false });
                                     } else {
