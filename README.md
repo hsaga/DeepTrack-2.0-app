@@ -1,7 +1,16 @@
-This project is an unholy agglomeration of react, electron, tensorflow, and zerorpc -- held together by post-it note glue and surface tension.
+An interface for training and evaluating deep learning models, targeting microscopy. 
 
 ## Installation
 
+### Windows
+
+Download and run the installer from [here]().
+On first launch, you may encounter a warning that the program is not signed. For now, please disregard this warning as we work on a fix.
+
+### Mac
+
+Download and run the installer from [here]().
+To launch the app, command click it in the and click run. You may encounter a warning that the program is not signed. For now, please disregard this warning as we work on a fix.
 
 ### Building from source
 
