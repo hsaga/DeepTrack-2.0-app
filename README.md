@@ -22,7 +22,7 @@ Needed:
 
 Create a folder and in a terminal run
 
-    git clone https://github.com/BenjaminMidtvedt/DeepTrack-app .
+    git clone https://github.com/softmatterlab/DeepTrack-2.0-app .
  
 Then run
     
