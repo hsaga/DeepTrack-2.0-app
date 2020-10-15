@@ -4,7 +4,7 @@ An interface for training and evaluating deep learning models, targeting microsc
 
 ### Windows
 
-Download and run the installer from [here]().
+Download and run the installer from [here](https://github.com/softmatterlab/DeepTrack-2.0-app/releases/latest/download/DeepTrack.exe).
 On first launch, you may encounter a warning that the program is not signed. For now, please disregard this warning as we work on a fix.
 
 ### Mac
