@@ -2,6 +2,7 @@ import React from 'react';
 import { Typography, List, Collapse, IconButton, Divider, Input, InputAdornment } from '@material-ui/core';
 import { Search, DeleteForever, ChevronRight } from '@material-ui/icons';
 import Python from '../../providers/PythonInterface';
+import rst2html from '../../providers/parseRST.ts';
 
 const ORDER = ['optics', 'scatterers', 'noise', 'math', 'models', 'features'].reverse();
 
@@ -17,11 +18,15 @@ export default class FeatureStore extends React.Component {
     }
 
     populateStore() {
+        this.setState({ loading: true });
         Python.getAllFeatures((error, res) => {
             if (!res) {
-                this.populateStore();
+                setTimeout(() => {
+                    this.populateStore();
+                }, 100);
+                return;
             }
-
+            console.log(res);
             const featureKeys = JSON.parse(window.localStorage.getItem('featureKeys')) || [];
             featureKeys.forEach((key) => {
                 const feature = JSON.parse(window.localStorage.getItem(key));
@@ -30,7 +35,7 @@ export default class FeatureStore extends React.Component {
                     res['My Features'][key] = feature;
                 }
             });
-            this.setState({ features: res });
+            this.setState({ loading: false, features: res });
         });
     }
 
@@ -126,11 +131,34 @@ function FeatureListSection(props) {
 function FeatureListItem(props) {
     const { item, name } = props;
     const [showMe, setShow] = React.useState(true);
+
+    const [isHovering, setIsHovering] = React.useState(0);
+    const [hoverIndex, setHoverIndex] = React.useState(0);
+    const [rstDoc, setRSTDoc] = React.useState('');
+
     return showMe ? (
         <div
             className={'grabbable text--' + props.parentName + '--white'}
             draggable
+            onMouseEnter={() => {
+                const c = setTimeout(() => {
+                    if (item.description) {
+                        if (!rstDoc) {
+                            setRSTDoc(rst2html(item.description));
+                        }
+                        setIsHovering(true);
+                        console.log(rstDoc);
+                    }
+                }, 200);
+                setHoverIndex(c);
+            }}
+            onMouseLeave={() => {
+                clearTimeout(hoverIndex);
+                setIsHovering(false);
+                console.log('No hover!');
+            }}
             onDragStart={(e) => {
+                setIsHovering(false);
                 if (Array.isArray(item)) {
                     e.dataTransfer.setData('items', JSON.stringify(item));
                 } else {
@@ -175,6 +203,7 @@ function FeatureListItem(props) {
                     <DeleteForever></DeleteForever>
                 </IconButton>
             ) : null}
+            {isHovering ? <div className="rst-container" dangerouslySetInnerHTML={{ __html: rstDoc }}></div> : null}
         </div>
     ) : null;
 }

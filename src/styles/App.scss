@@ -853,3 +853,7 @@ p {
     align-content: center;
     overflow-y: scroll;
 }
+
+.container-after-titlebar {
+    overflow: unset !important;
+}

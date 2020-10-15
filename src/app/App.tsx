@@ -3,6 +3,7 @@ import React from 'react';
 import '../styles/colors.scss';
 import '../styles/App.scss';
 import '../styles/sidebar.scss';
+import '../styles/RST.scss';
 
 import store, { reset } from '../store/store.js';
 
@@ -54,7 +55,7 @@ const useStyles = makeStyles((theme) =>
         root: {
             display: 'flex',
             height: 'calc(100vh - 30px)',
-            overflow: 'hidden',
+            // overflow: 'hidden',
         },
         appBar: {
             transition: theme.transitions.create(['margin', 'width'], {
@@ -244,7 +245,7 @@ export default function App() {
                                             <Code></Code>
                                         </IconButton>
                                     </Tooltip>
-                                    <Tooltip title="Download dataset">
+                                    {/* <Tooltip title="Download dataset">
                                         <IconButton
                                             color="inherit"
                                             aria-label="download data"
@@ -256,7 +257,7 @@ export default function App() {
                                         >
                                             <CloudDownload />
                                         </IconButton>
-                                    </Tooltip>
+                                    </Tooltip> */}
 
                                     <IconButton
                                         color="inherit"
