@@ -22,6 +22,7 @@ import io
 import re
 import glob
 import dts_to_py
+
 import google_api
 import zerorpc
 from deeptrack import *
@@ -168,12 +169,31 @@ class PyAPI(object):
         self.lock = threading.Lock
         self.generator = None
 
+        self.features = None
+        self.workspace = {}
+        self.last_feature_dict = None
+
+    def update_workspace(self, config):
+        for item in config:
+            if not item:
+                continue
+
+            if (
+                item["index"] in self.workspace
+                and self.workspace[item["index"]] == item
+            ):
+                continue
+
+            self.workspace[item["index"]] = item
+
+            self.requires_rebuild = True
+
+    # def exec_terminal():
+    #     pass
+
     @zerorpc.stream
     def download(self, id, destination):
-        iterator = google_api.load(id, destination)
-
-        print(iterator)
-        return iterator
+        yield from google_api.load(id, destination)
 
     @cached_function
     def getAvailableFunctions(self, *args, **kwargs):
@@ -1235,27 +1255,3 @@ class PyAPI(object):
             tmpfile.seek(0)
             out.append(tmpfile.getvalue())
         return out
-
-    def crop_to_divisible(self, image, divisor):
-        """Crops the dimensions of an image
-
-        Crops first two axes of an image to be divisible by a certain number.
-        Crops from the end of each axis.
-
-        PARAMETERS
-        ----------
-        image : np.ndarray
-            Image to be cropped
-        divisor : int
-            The number the dimensions should be divisible by
-
-        RETURNS
-        -------
-        np.ndarray
-            Cropped image
-        """
-
-        x_max = image.shape[0] // divisor * divisor
-        y_max = image.shape[1] // divisor * divisor
-
-        return image[:x_max, :y_max]

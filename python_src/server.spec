@@ -59,7 +59,7 @@ a = Analysis(['server.py'],
                                   "python/keras/engine/base_layer_v1.py"),
                      "tensorflow/python/keras/engine/")
                      ] + dlls,
-             hiddenimports=hiddenimports + ['pkg_resources.py2_warn','tensorflow.compiler.tf2tensorrt', 'imgaug', 'tensorflow', 'tensorflow_core', 'scipy', 'numpy', 'skimage', 'PIL', 'opencv-python', 'zerorpc'],
+             hiddenimports=hiddenimports + ['pkg_resources.py2_warn','tensorflow.compiler.tf2tensorrt', 'tensorflow', 'tensorflow_core', 'scipy', 'numpy', 'skimage', 'PIL', 'opencv-python', 'zerorpc'],
              hookspath=[],
              runtime_hooks=[],
              excludes=[],

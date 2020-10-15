@@ -353,11 +353,9 @@ export class Feature extends React.Component {
                         const name = value[0];
                         const obj = value[1];
 
-                        console.log(new_name);
-
                         const propDict = {
                             class: 'property',
-                            name: new_name,
+                            name: name,
                             S: obj.default || '',
                         };
 

@@ -1,0 +1,35 @@
+.rst-container {
+    position: fixed;
+    left: 200px;
+    // z-index: 10;
+    max-width: 400px;
+    max-height: 400px;
+    overflow-y: scroll;
+    padding: 10px;
+    background-color: #222;
+    border: 1px solid #666;
+    line-height: 1.2em;
+    letter-spacing: 1px;
+
+    .rst-text {
+        font-size: 1rem;
+    }
+
+    .rst-title {
+        font-size: 2rem;
+    }
+
+    .rst-interpreted_text {
+        font-family: Hack;
+        color: royalblue;
+    }
+
+    .rst-code_block {
+        font-family: Hack;
+        background-color: #111;
+        margin-left: 10px;
+        border: 1px solid #444;
+        padding: 5px;
+        line-height: 1.5em;
+    }
+}

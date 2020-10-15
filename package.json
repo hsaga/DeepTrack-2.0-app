@@ -123,6 +123,7 @@
         "redux-undo": "^1.0.1",
         "redux-undoable": "^1.0.2",
         "reselect": "^4.0.0",
+        "restructured": "0.0.11",
         "typescript": "3.9.7"
     },
     "homepage": "./"
